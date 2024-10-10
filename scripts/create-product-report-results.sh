@@ -60,8 +60,8 @@ create_integration() {
   return 1
 }
 
-rm -rf dev/junit/*
-echo "Deleted contents of dev/junit directory"
+rm -rf dev-tools/junit/*
+echo "Deleted contents of dev-tools/junit directory"
 
 product_id1=$(create_product "OpenShift" "OCP" "ocp@email.com")
 product_id2=$(create_product "Migration Toolkit for Containers" "MTC" "mtc@email.com")
@@ -71,9 +71,9 @@ if [ -n "$product_id1" ] && [ -n "$product_id2" ]; then
   if [ -n "$integration_id" ]; then
     export INTEGRATION_ID=$integration_id
     echo "Integration ID: $INTEGRATION_ID"
-    python3 dev/scripts/generate-test-data.py
+    python3 dev-tools/scripts/generate-test-data.py
 
-    junit_files=(dev/junit/*.xml)
+    junit_files=(dev-tools/junit/*.xml)
     shuffled_files=($(shuf -e "${junit_files[@]}"))
 
     half_length=$(( (${#shuffled_files[@]} + 1) / 2 ))

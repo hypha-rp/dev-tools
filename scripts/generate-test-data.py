@@ -2,6 +2,10 @@ import os
 import random
 import xml.etree.ElementTree as ET
 
+script_dir = os.path.dirname(os.path.abspath(__file__))
+junit_dir = os.path.join(os.path.dirname(script_dir), 'junit')
+os.makedirs(junit_dir, exist_ok=True)
+
 INTEGRATION_ID = os.getenv('INTEGRATION_ID', 'default-integration-id')
 
 def generate_testcase(id, classname, name, time, status, assertions, message=None):
@@ -61,7 +65,7 @@ def generate_junit_xml(index):
         for j in range(random.randint(1, 30)):
             status = random.choices(
                 ['pass', 'fail', 'error', 'skipped'],
-                weights=[0.7, 0.1, 0.1, 0.1],  # Increase the weight for 'pass'
+                weights=[0.7, 0.1, 0.1, 0.1],
                 k=1
             )[0]
             message = None
@@ -96,7 +100,7 @@ def generate_junit_xml(index):
         testsuites.append(testsuite)
     
     tree = ET.ElementTree(testsuites)
-    tree.write(f"dev/junit/junit-{index}.xml", encoding='utf-8', xml_declaration=True)
+    tree.write(os.path.join(junit_dir, f"junit-{index}.xml"), encoding='utf-8', xml_declaration=True)
 
 for i in range(10):
     generate_junit_xml(i)
