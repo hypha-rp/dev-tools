@@ -1,4 +1,4 @@
-COMPOSE_CMD=$(shell which podman-compose 2>/dev/null || which docker-compose)
+COMPOSE_CMD=$(shell which docker-compose 2>/dev/null || which podman-compose)
 
 
 demo: demo-down demo-up demo-product-create-and-report
