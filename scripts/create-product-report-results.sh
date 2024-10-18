@@ -59,9 +59,13 @@ create_integration() {
   echo "Failed to create integration" >&2
   return 1
 }
-
-rm -rf dev-tools/junit/*
-echo "Deleted contents of dev-tools/junit directory"
+if [ "$1" == "demo" ]; then
+  rm -rf junit/*
+  echo "Deleted contents of junit directory"
+else
+  rm -rf dev-tools/junit/*
+  echo "Deleted contents of dev-tools/junit directory"
+fi
 
 product_id1=$(create_product "OpenShift" "OCP" "ocp@email.com")
 product_id2=$(create_product "Migration Toolkit for Containers" "MTC" "mtc@email.com")
@@ -71,9 +75,18 @@ if [ -n "$product_id1" ] && [ -n "$product_id2" ]; then
   if [ -n "$integration_id" ]; then
     export INTEGRATION_ID=$integration_id
     echo "Integration ID: $INTEGRATION_ID"
-    python3 dev-tools/scripts/generate-test-data.py
+    if [ "$1" == "demo" ]; then
+      python3 scripts/generate-test-data.py
+    else
+      python3 dev-tools/scripts/generate-test-data.py
+    fi
 
-    junit_files=(dev-tools/junit/*.xml)
+    if [ "$1" == "demo" ]; then
+      junit_files=(junit/*.xml)
+    else
+      junit_files=(dev-tools/junit/*.xml)
+    fi
+
     shuffled_files=($(shuf -e "${junit_files[@]}"))
 
     half_length=$(( (${#shuffled_files[@]} + 1) / 2 ))
