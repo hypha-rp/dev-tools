@@ -11,4 +11,4 @@ demo-down:
 
 demo-product-create-and-report:
 	sleep 10
-	./scripts/create-product-report-results.sh demo
+	./scripts/create-products.sh
