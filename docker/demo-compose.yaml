@@ -14,7 +14,7 @@ services:
       - hypha-network
 
   hypha-api:
-    image: ghcr.io/hypha-rp/api:v1.1
+    image: ghcr.io/hypha-rp/api:v1
     container_name: hypha-api
     ports:
       - "8081:8081"
@@ -27,7 +27,7 @@ services:
       - hypha-network
 
   hypha-ui:
-    image: ghcr.io/hypha-rp/ui:v1.1
+    image: ghcr.io/hypha-rp/ui:v1
     container_name: hypha-ui
     ports:
       - "8080:80"
